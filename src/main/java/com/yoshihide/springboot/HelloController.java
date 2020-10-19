@@ -1,5 +1,7 @@
 package com.yoshihide.springboot;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +32,31 @@ public class HelloController {
 	public ModelAndView form(@ModelAttribute("formModel") MyData mydata, ModelAndView mav) {
 		repository.saveAndFlush(mydata);
 		return new ModelAndView("redirect:/");
+	}
+
+	@PostConstruct
+	public void init() {
+		// ダミーのデータ
+		MyData d1 = new MyData();
+		d1.setName("tetra");
+		d1.setAge(20);
+		d1.setMail("tetra@aqua.com");
+		d1.setMemo("small-size");
+		repository.saveAndFlush(d1);
+
+		MyData d2 = new MyData();
+		d2.setName("hotal");
+		d2.setAge(25);
+		d2.setMail("hotal@aqua.com");
+		d2.setMemo("small-size");
+		repository.saveAndFlush(d2);
+
+		MyData d3 = new MyData();
+		d3.setName("gecko");
+		d3.setAge(33);
+		d3.setMail("gecko@aqua.com");
+		d3.setMemo("size?");
+		repository.saveAndFlush(d3);
+
 	}
 }
