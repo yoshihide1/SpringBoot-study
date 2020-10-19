@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<style>
+h1 {
+	font-size: 18px;
+	font-weight: bold;
+	color: green;
+}
+
+body {
+	font-size: 13px;
+	color: gray;
+	margin: 5px 25px
+}
+
+tr {
+	margin: 5px;
+}
+
+th {
+	padding: 5px;
+	color: white;
+	background: darkgray;
+}
+
+td {
+	padding: 5px;
+	color: black;
+	background: #f0f0f0;
+}
+
+pre {
+	font-size: 13px;
+	color: gray;
+	padding: 5px 10px;
+	border: 1px solid gray;
+}
+</style>
+</head>
+
+<body>
+
+	<h1>Hello World!</h1>
+	<h1 th:text="#{content.title}">HELLO</h1>
+	<table>
+		<form method="post" action="/" th:object="${formModel}">
+			<tr>
+				<td><label for="name">名前</label></td>
+				<td><input type="text" name="name" th:value="*{name}" /></td>
+			</tr>
+			<tr>
+				<td><label for="age">年齢</label></td>
+				<td><input type="text" name="age" th:value="*{age}" /></td>
+			</tr>
+			<tr>
+				<td><label for="mail">メール</label></td>
+				<td><input type="text" name="mail" th:value="*{mail}" /></td>
+			</tr>
+			<tr>
+				<td><label for="memo">メモ</label></td>
+				<td><textarea name="memo" th:text="*{memo}" cols="20" rows="5"></textarea></td>
+			</tr>
+			<tr>
+				<td><label for=""></label></td>
+				<td><input type="submit" /></td>
+			</tr>
+		</form>
+
+	</table>
+
+	<hr />
+
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>名前</th>
+		</tr>
+		<tr th:each="obj : ${datalist}">
+			<td th:text="${obj.id}"></td>
+			<td th:text="${obj.name}"></td>
+		</tr>
+	</table>
+
+
+</body>
+
+</html>
