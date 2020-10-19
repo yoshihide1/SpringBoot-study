@@ -1,6 +1,6 @@
 package com.yoshihide.springboot;
 
-//import javax.persistence.Column;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,18 +13,20 @@ public class MyData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+
+	@Column
 	private long id;
 
-	(length=50,nullable=false)
+	@Column(length = 50, nullable = false)
 	private String name;
 
-	(length=200,nullable=true)
+	@Column(length = 200, nullable = true)
 	private String mail;
 
-	(nullable=true)
+	@Column(nullable = true)
 	private Integer age;
 
-	(nullable=true)
+	@Column(nullable = true)
 	private String memo;
 
 	public long getId() {
