@@ -64,7 +64,7 @@ public class HelloController {
 		mav.addObject("title", "Find Page");
 		mav.addObject("msg", "MyDataのサンプル");
 		// mav.addObject("formModel", mydata);
-		Iterable<MyData> list = repository.findAllOrderByName(); // dao.getAll();
+		Iterable<MyData> list = dao.getAll(); // repository.findAllOrderByName();
 		mav.addObject("datalist", list);
 		return mav;
 	}
