@@ -59,11 +59,12 @@ public class HelloController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView index(@ModelAttribute("formModel") MyData mydata, ModelAndView mav) {
+	public ModelAndView index(ModelAndView mav) {
 		mav.setViewName("index");
-		mav.addObject("msg", "myData sample");
-//		mav.addObject("formModel", mydata);
-		Iterable<MyData> list = dao.getAll();
+		mav.addObject("title", "Find Page");
+		mav.addObject("msg", "MyDataのサンプル");
+		// mav.addObject("formModel", mydata);
+		Iterable<MyData> list = repository.findAllOrderByName(); // dao.getAll();
 		mav.addObject("datalist", list);
 		return mav;
 	}

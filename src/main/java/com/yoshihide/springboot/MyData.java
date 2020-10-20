@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
@@ -14,6 +15,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "mydata")
+@NamedQuery(name = "findWithName", query = "from MyData where name like :fname")
+@NamedQuery(name = "findByAge", query = "from MyData where age > :min and age < :max")
+
 public class MyData {
 
 	@Id

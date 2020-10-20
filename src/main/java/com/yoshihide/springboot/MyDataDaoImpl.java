@@ -46,6 +46,13 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<MyData> findByAge(int min, int max) {
+		return (List<MyData>) entityManager.createNamedQuery("findByAge").setParameter("min", min)
+				.setParameter("max", max).getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<MyData> find(String fstr) {
 		List<MyData> list = null;
 		String qstr = "from MyData where id = ?1 or name like ?2 or mail like ?3";
@@ -53,10 +60,9 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 		try {
 			fid = Long.parseLong(fstr);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
-		Query query = entityManager.createQuery(qstr).setParameter(1, fid).setParameter(2, "%" + fstr + "%")
-				.setParameter(3, fstr + "@%");
+		Query query = entityManager.createNamedQuery("findWithName").setParameter("fname", "%" + fstr + "%");
 		list = query.getResultList();
 		return list;
 	}
