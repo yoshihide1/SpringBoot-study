@@ -37,6 +37,10 @@ td {
 	color: black;
 	background: #f0f0f0;
 }
+
+.err {
+	color: red;
+}
 </style>
 </head>
 
@@ -65,7 +69,9 @@ td {
 			</tr>
 			<tr>
 				<td><label for="memo">メモ</label></td>
-				<td><textarea name="memo" th:value="*{memo}"></textarea></td>
+				<td><textarea name="memo" th:value="*{memo}"></textarea>
+					<div th:if="${#fields.hasErrors('memo')}" th:errors="*{memo}"
+						th:errorclass="err"></div></td>
 			</tr>
 			<tr>
 				<td></td>

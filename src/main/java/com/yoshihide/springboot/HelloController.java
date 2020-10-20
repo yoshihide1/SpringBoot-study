@@ -91,21 +91,21 @@ public class HelloController {
 		d1.setName("tetra");
 		d1.setAge(20);
 		d1.setMail("tetra@aqua.com");
-		d1.setMemo("small-size");
+		d1.setMemo("03911111111");
 		repository.saveAndFlush(d1);
 
 		MyData d2 = new MyData();
 		d2.setName("hotal");
 		d2.setAge(25);
 		d2.setMail("hotal@aqua.com");
-		d2.setMemo("small-size");
+		d2.setMemo("22212235321");
 		repository.saveAndFlush(d2);
 
 		MyData d3 = new MyData();
 		d3.setName("gecko");
 		d3.setAge(33);
 		d3.setMail("gecko@aqua.com");
-		d3.setMemo("size?");
+		d3.setMemo("00033333333");
 		repository.saveAndFlush(d3);
 
 	}
