@@ -24,12 +24,44 @@ public class HelloController {
 	@Autowired
 	MyDataRepository repository;
 
+//	@PersistenceContext
+//	EntityManager entityManager;
+	@Autowired
+	MyDataDaoImpl dao;
+
+	@PostConstruct
+	public void init() {
+		// ダミーのデータ
+//		dao = new MyDataDaoImpl(entityManager);
+		MyData d1 = new MyData();
+		d1.setName("tetra");
+		d1.setAge(20);
+		d1.setMail("tetra@aqua.com");
+		d1.setMemo("03911111111");
+		repository.saveAndFlush(d1);
+
+		MyData d2 = new MyData();
+		d2.setName("hotal");
+		d2.setAge(25);
+		d2.setMail("hotal@aqua.com");
+		d2.setMemo("22212235321");
+		repository.saveAndFlush(d2);
+
+		MyData d3 = new MyData();
+		d3.setName("gecko");
+		d3.setAge(33);
+		d3.setMail("gecko@aqua.com");
+		d3.setMemo("00033333333");
+		repository.saveAndFlush(d3);
+
+	}
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView index(@ModelAttribute("formModel") MyData mydata, ModelAndView mav) {
 		mav.setViewName("index");
-		mav.addObject("msg", "this is sample content");
-		mav.addObject("formModel", mydata);
-		Iterable<MyData> list = repository.findAll();
+		mav.addObject("msg", "myData sample");
+//		mav.addObject("formModel", mydata);
+		Iterable<MyData> list = dao.getAll();
 		mav.addObject("datalist", list);
 		return mav;
 	}
@@ -84,29 +116,4 @@ public class HelloController {
 		return new ModelAndView("redirect:/");
 	}
 
-	@PostConstruct
-	public void init() {
-		// ダミーのデータ
-		MyData d1 = new MyData();
-		d1.setName("tetra");
-		d1.setAge(20);
-		d1.setMail("tetra@aqua.com");
-		d1.setMemo("03911111111");
-		repository.saveAndFlush(d1);
-
-		MyData d2 = new MyData();
-		d2.setName("hotal");
-		d2.setAge(25);
-		d2.setMail("hotal@aqua.com");
-		d2.setMemo("22212235321");
-		repository.saveAndFlush(d2);
-
-		MyData d3 = new MyData();
-		d3.setName("gecko");
-		d3.setAge(33);
-		d3.setMail("gecko@aqua.com");
-		d3.setMemo("00033333333");
-		repository.saveAndFlush(d3);
-
-	}
 }
