@@ -1,8 +1,10 @@
 package com.yoshihide.springboot;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -114,6 +116,33 @@ public class HelloController {
 	public ModelAndView remove(@RequestParam long id, ModelAndView mav) {
 		repository.deleteById(id);
 		return new ModelAndView("redirect:/");
+	}
+
+	@RequestMapping(value = "/find", method = RequestMethod.GET)
+	public ModelAndView find(ModelAndView mav) {
+		mav.setViewName("find");
+		mav.addObject("title", "Find Page");
+		mav.addObject("msg", "MyDataのサンプルです。");
+		mav.addObject("value", "");
+		Iterable<MyData> list = dao.getAll();
+		mav.addObject("datalist", list);
+		return mav;
+	}
+
+	@RequestMapping(value = "/find", method = RequestMethod.POST)
+	public ModelAndView search(HttpServletRequest request, ModelAndView mav) {
+		mav.setViewName("find");
+		String param = request.getParameter("fstr");
+		if (param == "") {
+			mav = new ModelAndView("redirect:/find");
+		} else {
+			mav.addObject("title", "Find Result");
+			mav.addObject("msg", "「" + param + "」の検索結果");
+			mav.addObject("value", param);
+			List<MyData> list = dao.find(param);
+			mav.addObject("datalist", list);
+		}
+		return mav;
 	}
 
 }
