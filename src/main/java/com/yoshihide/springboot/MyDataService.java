@@ -3,7 +3,7 @@ package com.yoshihide.springboot;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+//import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MyDataService {
-	@PersistenceContext
+//	@PersistenceContext
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
