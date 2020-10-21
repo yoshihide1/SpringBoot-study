@@ -3,7 +3,7 @@ package com.yoshihide.springboot;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+//import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public class MyDataDaoImpl implements MyDataDao<MyData> {
 	private static final long serialVersionUID = 1L;
 
-	@PersistenceContext
+//	@PersistenceContext
 	private EntityManager entityManager;
 
 	public MyDataDaoImpl() {
