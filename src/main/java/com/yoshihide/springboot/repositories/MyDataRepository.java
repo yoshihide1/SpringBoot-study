@@ -3,6 +3,8 @@ package com.yoshihide.springboot.repositories;
 //import java.util.Optional;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +14,9 @@ import com.yoshihide.springboot.MyData;
 
 @Repository
 public interface MyDataRepository extends JpaRepository<MyData, Long> {
+
+	public Page<MyData> findAll(Pageable pageable);
+
 	@Query("SELECT d FROM MyData d ORDER BY d.name")
 	List<MyData> findAllOrderByName();
 

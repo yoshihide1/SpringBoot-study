@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,15 @@ public class HelloController {
 
 	@Autowired
 	private MyDataService service;
+
+	@RequestMapping(value = "/page", method = RequestMethod.GET)
+	public ModelAndView index(ModelAndView mav, Pageable pageable) {
+		mav.setViewName("index");
+		mav.addObject("title", "Find Page");
+		Page<MyData> list = repository.findAll(pageable);
+		mav.addObject("datalist", list);
+		return mav;
+	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ModelAndView indexById(@PathVariable long id, ModelAndView mav) {
