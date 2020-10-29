@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,9 +27,22 @@ public class HelloController {
 	// 登録フォーム
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	@Transactional(readOnly = false)
-	public ModelAndView form(@ModelAttribute("formModel") MyData mydata, ModelAndView mav) {
-		myDataRepository.saveAndFlush(mydata);
-		return new ModelAndView("redirect:/");
+	public ModelAndView form(@ModelAttribute("formModel") @Validated MyData mydata, BindingResult result,
+			ModelAndView mov) {
+		ModelAndView res = null;
+		if (!result.hasErrors()) {
+			myDataRepository.saveAndFlush(mydata);
+			res = new ModelAndView("redirect:/");
+		} else {
+			mov.setViewName("index");
+			mov.addObject("msg", "正しく入力してください！");
+			Iterable<MyData> list = myDataRepository.findAll();
+			mov.addObject("datalist", list);
+			res = mov;
+		}
+		return res;
+//		myDataRepository.saveAndFlush(mydata);
+//		return new ModelAndView("redirect:/");
 	}
 
 	// データの取得

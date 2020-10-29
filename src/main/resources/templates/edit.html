@@ -37,6 +37,7 @@
 
 <body>
 	<h1 th:text="${title}">Edit page</h1>
+	<p th:text="${msg}"></p>
 	<table>
 		<form method="post" action="/edit" th:object="${formModel}">
 			<input type="hidden" name="id" th:value="*{id}" />
