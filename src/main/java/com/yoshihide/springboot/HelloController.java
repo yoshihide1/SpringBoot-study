@@ -1,83 +1,76 @@
 package com.yoshihide.springboot;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//追加
-import org.springframework.data.domain.Pageable;
-//ここまで
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.yoshihide.springboot.repositories.MyDataMongoRepository;
-//import com.yoshihide.springboot.repositories.MyDataRepository;
+import com.yoshihide.springboot.repositories.MyDataRepository;
 
 @Controller
 public class HelloController {
 
 	@Autowired
-	MyDataMongoRepository mongoRepository;
+	private MyDataRepository myDataRepository;
+	@Autowired
+	MyDataDaoImpl dao;
 
-//	@Autowired
-//	MyDataRepository myRepository;
-
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public ModelAndView index(ModelAndView mav, /* 追加 */Pageable pageable) {
-		mav.setViewName("index");
-		mav.addObject("title", "Find Page");
-		mav.addObject("msg", "MyDataMongoのサンプル(/index)");
-		Iterable<MyDataMongo> list = mongoRepository.findAll(pageable);
-		mav.addObject("datalist", list);
-		return mav;
-	}
-
+	// 登録フォーム
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	@Transactional(readOnly = false)
-	public ModelAndView form(@RequestParam("name") String name, @RequestParam("memo") String memo, ModelAndView mav) {
-		MyDataMongo mydata = new MyDataMongo(name, memo);
-		mongoRepository.save(mydata);
+	public ModelAndView form(@ModelAttribute("formModel") MyData mydata, ModelAndView mav) {
+		myDataRepository.saveAndFlush(mydata);
 		return new ModelAndView("redirect:/");
 	}
 
-	@RequestMapping(value = "/find", method = RequestMethod.GET)
-	public ModelAndView find(ModelAndView mav) {
-		mav.setViewName("find");
-		mav.addObject("title", "Find Page");
-		mav.addObject("msg", "MyDataのサンプル");
-		mav.addObject("value", "");
-		List<MyDataMongo> list = mongoRepository.findAll();
+	// データの取得
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView index(@ModelAttribute("formModel") MyData mydata, ModelAndView mav) {
+		mav.setViewName("index");
+		mav.addObject("msg", "User List");
+		Iterable<MyData> list = dao.findAll();
 		mav.addObject("datalist", list);
 		return mav;
 	}
 
-	@RequestMapping(value = "/find", method = RequestMethod.POST)
-	public ModelAndView search(@RequestParam("find") String param, ModelAndView mav) {
-		mav.setViewName("find");
-		if (param == "") {
-			mav = new ModelAndView("redirect:/find");
-		} else {
-			mav.addObject("title", "Find Result");
-			mav.addObject("msg", "「" + param + "」の検索結果");
-			mav.addObject("value", param);
-			List<MyDataMongo> list = mongoRepository.findByNameLike(param);
-			mav.addObject("datalist", list);
-		}
+	// 編集
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView edit(@ModelAttribute MyData mydata, @PathVariable int id, ModelAndView mav) {
+		mav.setViewName("edit");
+		mav.addObject("title", "Edit Page");
+		Optional<MyData> data = myDataRepository.findById((long) id);
+		mav.addObject("formModel", data.get());
 		return mav;
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	@Transactional(readOnly = false)
+	public ModelAndView update(@ModelAttribute MyData mydata, ModelAndView mav) {
+		myDataRepository.saveAndFlush(mydata);
+		return new ModelAndView("redirect:/");
+	}
+
+	// 削除
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public ModelAndView delete(@PathVariable int id, ModelAndView mav) {
+	public ModelAndView delete(@ModelAttribute MyData mydata, @PathVariable int id, ModelAndView mav) {
 		mav.setViewName("delete");
 		mav.addObject("title", "Delete Page");
-		Optional<MyDataMongo> data = mongoRepository.findById((long) id);
+		Optional<MyData> data = myDataRepository.findById((long) id);
 		mav.addObject("formModel", data.get());
 		return mav;
+	}
+
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public ModelAndView remove(@RequestParam long id, ModelAndView mav) {
+		myDataRepository.deleteById(id);
+		return new ModelAndView("redirect:/");
 	}
 
 }

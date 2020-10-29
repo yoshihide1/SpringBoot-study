@@ -8,34 +8,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 @Entity
-@Table(name = "mydata")
-@NamedQuery(name = "findWithName", query = "from MyData where name like :fname")
-@NamedQuery(name = "findByAge", query = "from MyData where age > :min and age < :max")
-
 public class MyData {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	@Column(nullable = true)
-	private List<MsgData> msgdatas;
+	private List<MyData> mydatas;
 
-	public List<MsgData> getMsgdatas() {
-		return msgdatas;
+	public List<MyData> getMydatas() {
+		return mydatas;
 	}
 
-	public void setMsgdatas(List<MsgData> msgdatas) {
-		this.msgdatas = msgdatas;
+	public void setMydatas(List<MyData> mydatas) {
+		this.mydatas = mydatas;
 	}
 
 	@Id
@@ -56,10 +48,6 @@ public class MyData {
 	@Min(0)
 	@Max(200)
 	private Integer age;
-
-	@Column(nullable = true)
-//	@Phone(onlyNumber = true)
-	private String memo;
 
 	public long getId() {
 		return id;
@@ -91,14 +79,6 @@ public class MyData {
 
 	public void setAge(Integer age) {
 		this.age = age;
-	}
-
-	public String getMemo() {
-		return memo;
-	}
-
-	public void setMemo(String memo) {
-		this.memo = memo;
 	}
 
 }

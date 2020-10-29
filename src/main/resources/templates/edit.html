@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>edit page</title>
-<style>
-h1 {
-	font-size: 18px;
-	font-weight: bold;
-	color: gray;
-}
+	<meta charset="UTF-8">
+	<title>edit page</title>
+	<style>
+		h1 {
+			font-size: 18px;
+			font-weight: bold;
+			color: gray;
+		}
 
-body {
-	font-size: 13px;
-	color: gray;
-	margin: 5px 25px
-}
+		body {
+			font-size: 13px;
+			color: gray;
+			margin: 5px 25px
+		}
 
-tr {
-	margin: 5px;
-}
+		tr {
+			margin: 5px;
+		}
 
-th {
-	padding: 5px;
-	color: white;
-	background: darkgray;
-}
+		th {
+			padding: 5px;
+			color: white;
+			background: darkgray;
+		}
 
-td {
-	padding: 5px;
-	color: black;
-	background: #f0f0f0;
-}
-</style>
+		td {
+			padding: 5px;
+			color: black;
+			background: #f0f0f0;
+		}
+	</style>
 </head>
+
 <body>
 	<h1 th:text="${title}">Edit page</h1>
 	<table>
@@ -51,10 +53,6 @@ td {
 				<td><input type="text" name="mail" th:value="*{mail}" /></td>
 			</tr>
 			<tr>
-				<td><label for="memo">メモ</label></td>
-				<td><textarea name="memo" th:value="*{memo}"></textarea></td>
-			</tr>
-			<tr>
 				<td></td>
 				<td><input type="submit" /></td>
 			</tr>
@@ -62,4 +60,5 @@ td {
 	</table>
 
 </body>
+
 </html>

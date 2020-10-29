@@ -3,6 +3,7 @@ package com.yoshihide.springboot;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 //import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Repository;
 public class MyDataDaoImpl implements MyDataDao<MyData> {
 	private static final long serialVersionUID = 1L;
 
-//	@PersistenceContext
+	@PersistenceContext
 	private EntityManager entityManager;
 
 	public MyDataDaoImpl() {
@@ -27,16 +28,13 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 	}
 
 	@Override
-	public List<MyData> getAll() {
-		int offset = 1; // 取り出す位置
-		int limit = 2; // 取り出す数
+	public List<MyData> findAll() {
 		List<MyData> list = null;
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<MyData> query = builder.createQuery(MyData.class);
 		Root<MyData> root = query.from(MyData.class);
 		query.select(root);
-		list = (List<MyData>) entityManager.createQuery(query).setFirstResult(offset).setMaxResults(limit)
-				.getResultList();
+		list = (List<MyData>) entityManager.createQuery(query).getResultList();
 		return list;
 	}
 
