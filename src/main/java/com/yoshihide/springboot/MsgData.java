@@ -10,6 +10,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "msgdata")
 public class MsgData {
@@ -17,53 +20,25 @@ public class MsgData {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
 	@NotNull
+	@Getter
+	@Setter
 	private long id;
 
 	@Column
+	@NotEmpty
+	@Getter
+	@Setter
 	private String title;
 
 	@Column(nullable = false)
 	@NotEmpty
+	@Getter
+	@Setter
 	private String message;
 
 	@ManyToOne
+	@Getter
+	@Setter
 	private MyData mydata;
-
-	public MsgData() {
-		super();
-		mydata = new MyData();
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public MyData getMyData() {
-		return mydata;
-	}
-
-	public void setMyData(MyData mydata) {
-		this.mydata = mydata;
-	}
 
 }

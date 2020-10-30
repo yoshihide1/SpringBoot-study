@@ -11,4 +11,5 @@ import com.yoshihide.springboot.MsgData;
 public interface MsgDataRepository extends JpaRepository<MsgData, Long> {
 
 	public List<MsgData> findAll();
+
 }

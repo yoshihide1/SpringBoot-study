@@ -16,71 +16,43 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "mydata")
 public class MyData {
-	// Entityの連携
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "mydata", cascade = CascadeType.ALL)
 	@Column(nullable = true)
+	@Getter
+	@Setter
 	private List<MsgData> msgdatas;
-
-	public List<MsgData> getMsgdatas() {
-		return msgdatas;
-	}
-
-	public void setMsgdatas(List<MsgData> msgdatas) {
-		this.msgdatas = msgdatas;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
 	@NotNull
+	@Getter
+	@Setter
 	private long id;
 
 	@Column(length = 50, nullable = false)
 	@NotEmpty
+	@Getter
+	@Setter
 	private String name;
 
 	@Column(length = 200, nullable = true)
 	@Email
+	@Getter
+	@Setter
 	private String mail;
 
 	@Column(nullable = true)
 	@Min(0)
 	@Max(200)
+	@Getter
+	@Setter
 	private Integer age;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getMail() {
-		return mail;
-	}
-
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
 
 }
