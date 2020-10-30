@@ -21,8 +21,10 @@ public class HelloController {
 
 	@Autowired
 	private MyDataRepository myDataRepository;
-	@Autowired
-	MyDataDaoImpl dao;
+
+	// 上のRepositoryを使うかＤａｏを使うか
+//	@Autowired
+//	MyDataDaoImpl dao;
 
 	// 登録フォーム
 	@RequestMapping(value = "/", method = RequestMethod.POST)
@@ -30,15 +32,15 @@ public class HelloController {
 	public ModelAndView form(@ModelAttribute("formModel") @Validated MyData mydata, BindingResult result,
 			ModelAndView mov) {
 		ModelAndView res = null;
-		if (!result.hasErrors()) {
-			myDataRepository.saveAndFlush(mydata);
-			res = new ModelAndView("redirect:/");
-		} else {
+		if (result.hasErrors()) {
 			mov.setViewName("index");
 			mov.addObject("msg", "正しく入力してください！");
 			Iterable<MyData> list = myDataRepository.findAll();
 			mov.addObject("datalist", list);
 			res = mov;
+		} else {
+			myDataRepository.saveAndFlush(mydata);
+			res = new ModelAndView("redirect:/");
 		}
 		return res;
 //		myDataRepository.saveAndFlush(mydata);
@@ -50,7 +52,7 @@ public class HelloController {
 	public ModelAndView index(@ModelAttribute("formModel") MyData mydata, ModelAndView mav) {
 		mav.setViewName("index");
 		mav.addObject("msg", "User List");
-		Iterable<MyData> list = dao.findAll();
+		Iterable<MyData> list = myDataRepository.findAll();
 		mav.addObject("datalist", list);
 		return mav;
 	}

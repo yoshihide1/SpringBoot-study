@@ -63,13 +63,14 @@
   <table>
     <tr>
       <th>ID</th>
-      <th>名前</th>
       <th>タイトル</th>
+      <th>メッセージ</th>
     </tr>
     <tr th:each="obj : ${datalist}">
       <td th:text="${obj.id}"></td>
-      <td th:text="${obj.mydata.name}"></td>
+      <!-- <td th:text="${obj.mydata.name}"></td> -->
       <td th:text="${obj.title}"></td>
+      <td th:text="${obj.message}"></td>
     </tr>
   </table>
 </body>

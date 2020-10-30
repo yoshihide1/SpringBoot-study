@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -16,18 +17,19 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "mydata")
 public class MyData {
-
+	// Entityの連携
 	@OneToMany(cascade = CascadeType.ALL)
 	@Column(nullable = true)
-	private List<MyData> mydatas;
+	private List<MsgData> msgdatas;
 
-	public List<MyData> getMydatas() {
-		return mydatas;
+	public List<MsgData> getMsgdatas() {
+		return msgdatas;
 	}
 
-	public void setMydatas(List<MyData> mydatas) {
-		this.mydatas = mydatas;
+	public void setMsgdatas(List<MsgData> msgdatas) {
+		this.msgdatas = msgdatas;
 	}
 
 	@Id
