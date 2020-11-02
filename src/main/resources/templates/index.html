@@ -2,8 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>top page</title>
+
 <style>
 h1 {
 	font-size: 18px;
@@ -15,11 +16,6 @@ body {
 	font-size: 13px;
 	color: gray;
 	margin: 5px 25px;
-}
-
-pre {
-	border: solid 3px #ddd;
-	padding: 10px;
 }
 
 tr {
@@ -38,6 +34,19 @@ td {
 	background: #f0f0f0;
 }
 
+table.navi {
+	width: 100%;
+	background: white;
+}
+
+table.navi tr {
+	background: white;
+}
+
+table.navi tr td {
+	background: white;
+}
+
 .err {
 	color: red;
 }
@@ -49,18 +58,68 @@ td {
 	<p th:text="${msg}"></p>
 	<table>
 		<tr>
-			<th>ID</th>
+			<th>登録フォーム</th>
+		</tr>
+		<form action="/" method="POST" th:object="${formModel}">
+			
+			<tr>
+				<td><label for="name">名前</label></td>
+				<td><input type="text" name="name" th:value="*{name}"
+					th:errorclass="err" />
+					<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+						th:errorclass="err"></div></td>
+			</tr>
+			<tr>
+				<td><label for="age">年齢</label></td>
+				<td><input type="text" name="age" th:value="*{age}"
+					th:errorclass="err" />
+					<div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"
+						th:errorclass="err"></div></td>
+			</tr>
+			<tr>
+				<td><label for="mail">メール</label></td>
+				<td><input type="text" name="mail" th:value="*{mail}"
+					th:errorclass="err" />
+					<div th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"
+						th:errorclass="err"></div></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit"></td>
+			</tr>
+		</form>
+	</table>
+	<hr />
+	<table>
+		<form action="/find" method="POST">
+			<tr>
+				<td>検索(名前):</td>
+				<td><input type="text" name="find" size="20"
+					th:value="${value}" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" /></td>
+			</tr>
+		</form>
+	</table>
+	<table>
+		<tr>
+			<!-- <th>ID</th> -->
 			<th>名前</th>
-			<th>メール</th>
 			<th>年齢</th>
-			<th>メモ(tel)</th>
+			<th>メール</th>
+			<th>編集</th>
+			<th>削除</th>
 		</tr>
 		<tr th:each="obj : ${datalist}">
-			<td th:text="${obj.id}"></td>
+			<!-- <td th:text="${obj.id}"></td> -->
 			<td th:text="${obj.name}"></td>
-			<td th:text="${obj.mail}"></td>
 			<td th:text="${obj.age}"></td>
-			<td th:text="${obj.memo}"></td>
+			<td th:text="${obj.mail}"></td>
+			<td><a th:href="@{/edit/{id}(id=${obj.id})}">edit</a></td>
+			<td><a th:href="@{/delete/{id}(id=${obj.id})}">del</a></td>
+			<td><a th:href="@{/msg/{id}(id=${obj.id})}">msg(仮)</a></td>
 		</tr>
 	</table>
 

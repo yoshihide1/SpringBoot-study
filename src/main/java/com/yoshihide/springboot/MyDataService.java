@@ -3,7 +3,6 @@ package com.yoshihide.springboot;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-//import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -12,12 +11,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MyDataService {
+
 //	@PersistenceContext
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
 	public List<MyData> getAll() {
-		return (List<MyData>) entityManager.createQuery("form MyData").getResultList();
+		return (List<MyData>) entityManager.createQuery("from MyData").getResultList();
 	}
 
 	public MyData get(int num) {

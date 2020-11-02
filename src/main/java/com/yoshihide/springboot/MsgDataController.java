@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.yoshihide.springboot.repositories.MsgDataRepository;
+import com.yoshihide.springboot.repositories.MyDataRepository;
 
 @Controller
 public class MsgDataController {
@@ -23,16 +25,20 @@ public class MsgDataController {
 	@Autowired
 	MsgDataRepository repository;
 
+	@Autowired
+	MyDataRepository myDataRepository;
+
 	@PersistenceContext
 	EntityManager entityManager;
 
 	MsgDataDaoImpl dao;
 
-	@RequestMapping(value = "/msg", method = RequestMethod.GET)
-	public ModelAndView msg(ModelAndView mav) {
+	@RequestMapping(value = "/msg/{user_id}", method = RequestMethod.GET)
+	public ModelAndView msg(ModelAndView mav, @PathVariable int user_id) {
 		mav.setViewName("showMsgData");
 		mav.addObject("title", "Sample");
 		mav.addObject("msg", "MsgDataのサンプル");
+		mav.addObject("user_id", (long) user_id);
 		MsgData msgdata = new MsgData();
 		mav.addObject("formModel", msgdata);
 		List<MsgData> list = (List<MsgData>) dao.getAll();
@@ -46,11 +52,15 @@ public class MsgDataController {
 			mav.setViewName("showMsgData");
 			mav.addObject("title", "Sample [ERROR]");
 			mav.addObject("msg", "値を再チェックしてください");
+			mav.addObject("formModel", msgdata);
+			List<MsgData> list = (List<MsgData>) dao.getAll();
+			mav.addObject("datalist", list);
 			return mav;
 		} else {
 			repository.saveAndFlush(msgdata);
-			return new ModelAndView("redirect:/msg");
+			return new ModelAndView("redirect:/");
 		}
+
 	}
 
 	@PostConstruct
