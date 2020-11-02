@@ -41,7 +41,7 @@
 	<table>
 		<form action="/find" method="POST">
 			<tr>
-				<td>検索:</td>
+				<td>検索(名前):</td>
 				<td><input type="text" name="find" size="20" th:value="${value}" /></td>
 			</tr>
 			<tr>
@@ -63,6 +63,7 @@
 			<td th:text="${obj.date}"></td>
 		</tr>
 	</table>
+	<a href="/">戻る</a>
 </body>
 
 </html>

@@ -15,7 +15,7 @@ public class MyPageAttributeTagProcessor extends AbstractAttributeTagProcessor {
 
 	private static final String ATTR_NAME = "mypage";
 	private static final int PRECEDENCE = 10000;
-	public static int size = 2;
+	public static int size = 5;
 
 	public MyPageAttributeTagProcessor(final String dialectPrefix) {
 		super(TemplateMode.HTML, dialectPrefix, null, false, ATTR_NAME, true, PRECEDENCE, true);
@@ -36,7 +36,7 @@ public class MyPageAttributeTagProcessor extends AbstractAttributeTagProcessor {
 		final IStandardExpression expression = parser.parseExpression(context, attrValue);
 		int value = (int) expression.execute(context);
 		value = value < 0 ? 0 : value;
-		handler.setAttribute("href", "/page?size=" + size + "&page=" + value);
+		handler.setAttribute("href", "/?size=" + size + "&page=" + value);
 
 	}
 }
