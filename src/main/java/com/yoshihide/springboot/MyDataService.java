@@ -2,36 +2,31 @@ package com.yoshihide.springboot;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.yoshihide.springboot.mapper.MyDataMapper;
 
 @Service
 public class MyDataService {
+// MyBatis
 
-//	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	MyDataMapper myDataMapper;
 
-	@SuppressWarnings("unchecked")
-	public List<MyData> getAll() {
-		return (List<MyData>) entityManager.createQuery("from MyData").getResultList();
+	@Transactional(readOnly = true)
+	public List<MyData> userList() {
+		return myDataMapper.findAll();
 	}
 
-	public MyData get(int num) {
-		return (MyData) entityManager.createQuery("from MyData where id = " + num).getSingleResult();
+	@Transactional
+	public List<MyData> saveUser(String name, String mail, int age) {
+		return myDataMapper.save(name, mail, age);
 	}
 
-	public List<MyData> find(String fstr) {
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<MyData> query = builder.createQuery(MyData.class);
-		Root<MyData> root = query.from(MyData.class);
-		query.select(root).where(builder.equal(root.get("name"), fstr));
-		List<MyData> list = null;
-		list = (List<MyData>) entityManager.createQuery(query).getResultList();
-		return list;
-
+	public List<MyData> findName(String str) {
+		return myDataMapper.findByName(str);
 	}
+
 }

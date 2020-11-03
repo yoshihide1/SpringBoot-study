@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yoshihide.springboot.mapper.MyDataMapper">
+
+	<select id="findAll" resultType="MyData">
+		select
+		id,
+		name,
+		age,
+		mail
+		from
+		mydata
+	</select>
+
+	<select id="findByName" resultType="MyData">
+		select
+		id,
+		name,
+		age,
+		mail
+		from
+		mydata
+		where name like "%" #{name} "%"
+	</select>
+	<select id="findById" resultType="MyData">
+		select
+		id,
+		name,
+		age,
+		mail
+		from
+		mydata
+		where id = #{id}
+	</select>
+
+	<select id="save" parameterType="MyData">
+		insert into
+		mydata
+		(age, mail,
+		name)
+		values(#{age}, #{mail}, #{name})
+	</select>
+	<select id="update" parameterType="MyData">
+		update mydata
+		set name =
+		#{name},
+		age = #{age},
+		mail = #{mail}
+		where id = #{id}
+	</select>
+	<select id="deleteById" parameterType="MyData">
+		delete from mydata
+		where id = #{id}
+	</select>
+
+</mapper>
