@@ -102,7 +102,6 @@ public class HelloController {
 
 	@RequestMapping(value = "/find", method = RequestMethod.POST)
 	public ModelAndView search(HttpServletRequest request, ModelAndView mav) {
-//		mav.setViewName("find");
 		String param = request.getParameter("find");
 		System.out.println(param);
 		List<MyData> result = myDataMapper.findByName(param);
