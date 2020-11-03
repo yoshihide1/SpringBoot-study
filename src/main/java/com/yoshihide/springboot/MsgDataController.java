@@ -1,7 +1,5 @@
 package com.yoshihide.springboot;
 
-import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,8 +29,6 @@ public class MsgDataController {
 	@PersistenceContext
 	EntityManager entityManager;
 
-	MsgDataDaoImpl dao;
-
 	@RequestMapping(value = "/msg/{user_id}", method = RequestMethod.GET)
 	public ModelAndView msg(ModelAndView mav, @PathVariable int user_id) {
 		mav.setViewName("showMsgData");
@@ -41,8 +37,8 @@ public class MsgDataController {
 		mav.addObject("user_id", (long) user_id);
 		MsgData msgdata = new MsgData();
 		mav.addObject("formModel", msgdata);
-		List<MsgData> list = (List<MsgData>) dao.getAll();
-		mav.addObject("datalist", list);
+//		List<MsgData> list = (List<MsgData>) dao.getAll();
+//		mav.addObject("datalist", list);
 		return mav;
 	}
 
@@ -53,8 +49,8 @@ public class MsgDataController {
 			mav.addObject("title", "Sample [ERROR]");
 			mav.addObject("msg", "値を再チェックしてください");
 			mav.addObject("formModel", msgdata);
-			List<MsgData> list = (List<MsgData>) dao.getAll();
-			mav.addObject("datalist", list);
+//			List<MsgData> list = (List<MsgData>) dao.getAll();
+//			mav.addObject("datalist", list);
 			return mav;
 		} else {
 			repository.saveAndFlush(msgdata);
@@ -66,6 +62,6 @@ public class MsgDataController {
 	@PostConstruct
 	public void init() {
 		System.out.println("ok");
-		dao = new MsgDataDaoImpl(entityManager);
+//		dao = new MsgDataDaoImpl(entityManager);
 	}
 }
